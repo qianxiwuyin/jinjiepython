@@ -35,7 +35,6 @@ import random
 生成器函数： yield 函数和方法
 """
 
-
 # class BingoCage:  # call 方法的用法
 #
 #     def __init__(self, items):  # 接受可迭代对象
@@ -56,6 +55,144 @@ import random
 #
 # uppper_case_name.short_description = 'adasdfsdf'
 
+# def tag(name, cls=None, *content, **attrs):
+#     """生成一个或者多个HTML 标签"""
+#     if cls is not None:
+#         attrs['class'] = cls
+#     if attrs:
+#         attr_str = ''.join(' %s="%s"' % (attr,value)
+#                            for attr,value
+#                            in sorted(attrs.items()))
+#     else:
+#         attr_str = ''
+#     if content:
+#         return '\n'.join('<%s%s>%s</%s>' %
+#                          (name,attr_str,c,name) for c in content)
+#     else:
+#         return '<%s%s />' % (name,attr_str)
+#
+# if __name__ == '__main__':
+#     a = {'name':'img','io':'09'}
+#     b=('img',9,45)
+#     print(tag(*b))
+
+# def clip(text:str,max_len:'int > 0 ' = 80) -> str:
+#     """在 max——len 前面或者后面的第一个空格处截断文本,注解 的妙用
+#     :param text:
+#     :param max_len: 最长值
+#     :return:
+#     """
+#     end = None
+#     if len(text) > max_len:
+#         space_before = text.find(' ',0,max_len)# 指定检索空格
+#         print('3',space_before)
+#         if space_before >= 0:
+#             end = space_before
+#         else:
+#             space_after = text.find(' ',max_len)
+#             print(space_after)
+#             if space_after >= 0:
+#                 end = space_after
+#     if end is None: # 没有找到空格
+#         end = len(text)
+#     return text[:end].rstrip()
+
+# 函数声明的例子
+# """把tag签名绑在一个参数字段上"""
+# import inspect
+# def tag(name, cls=None, *content, **attrs):
+#     """生成一个或者多个HTML 标签"""
+#     if cls is not None:
+#         attrs['class'] = cls
+#     if attrs:
+#         attr_str = ''.join(' %s="%s"' % (attr,value)
+#                            for attr,value
+#                            in sorted(attrs.items()))
+#     else:
+#         attr_str = ''
+#     if content:
+#         return '\n'.join('<%s%s>%s</%s>' %
+#                          (name,attr_str,c,name) for c in content)
+#     else:
+#         return '<%s%s />' % (name,attr_str)
+#
+# sig = inspect.signature(tag)
+# my_tag = {'name':'img','title':'Sunset Boulevard',
+#           'src':'sunset.jpg','cls':'framd'}
+# bound_args = sig.bind(**my_tag)
+# for name,values in bound_args.arguments.items():
+#     print(name,'=',values)
+
+# 5.10 介绍函数式编程的包 主要式两个模块 operator 和
+
+# from functools import reduce
+# from operator import mul
+# from operator import itemgetter
+#
+#
+# def fact(n: int):
+#     return reduce(mul, range(1, n + 1))
+#
+#
+# metro_data = [('tokyo', 'jp', 36.44, (35.4, 12.4)), ('delhi ncr', 'in', 36.45, (35.5, 121.4)),
+#               ('moxige', 'mo', 37.44, (37.4, 13.4))]
+#
+# for city in sorted(metro_data,key=itemgetter(2)):
+#     # itemgetter(1) 类似与lamda a:a[1] 一样 返回索引1的位置，按照国家代码第二个
+#     print(city)
+#
+# cc_name = itemgetter(1,0) # 按照多元参数传给itemgetter 他会构建函数返回提取的值构成元素
+# for city in metro_data:
+#     print(cc_name(city))
+
+#
+# from collections import namedtuple
+#
+#
+# metro_data = [('tokyo', 'jp', 36.44, (35.4, 12.4)), ('delhi ncr', 'in', 36.45, (35.5, 121.4)),
+#               ('moxige', 'mo', 37.44, (37.4, 13.4))]
+#
+# LatLong = namedtuple('LatLong','lat long')
+# Metropolis = namedtuple('Metropolis','name cc pop coord')
+#
+# metro_areas = [Metropolis(name,cc,pop,LatLong(lat,long))
+#                for name,cc,pop,(lat,long) in metro_data]
+#
+# print(metro_areas[0])
+
+# 这是用nametuple 展示
+
+# 使用methodcaller 使用实例 第二个测试展示绑定额外参数方式
+
+# from operator import methodcaller
+# s = 'this is time'
+# upcase = methodcaller('upper') # 传参以字符串的形式调用
+# print(upcase(s))
+# hiphenate = methodcaller('replace',' ','-')
+# print(hiphenate(s))
+
+# 使用赴南昌tools。partial冻结参数 使用这个函数可以把接受一个或多个参数的函数改编成需要回调的api
+# from operator import mul
+# from functools import partial
+#
+# triple = partial(mul,3)
+# print(triple(7)) # 把其中一个参数定为3  然后需要传成7
+# a = list(map(triple,range(1,10)))
+# print(a)
+
+# 常用于多国编写脚本
+# import unicodedata,functools
+#
+# nfc = functools.partial(unicodedata.normalize,'NFC')
+# s1 = 'café'
+# S2 = 'cafe\u0301'
+# print(s1,S2)
+# print(s1==S2)
+# print(nfc(s1) == nfc(S2))
+
+
+
+import inspect
 def tag(name, cls=None, *content, **attrs):
     """生成一个或者多个HTML 标签"""
     if cls is not None:
@@ -72,7 +209,7 @@ def tag(name, cls=None, *content, **attrs):
     else:
         return '<%s%s />' % (name,attr_str)
 
-if __name__ == '__main__':
-    a = {'name':'img','io':'09'}
-    b=('img',9,45)
-    print(tag(*b))
+sig = inspect.signature(tag)
+my_tag = {'name':'img','title':'Sunset Boulevard',
+          'src':'sunset.jpg','cls':'framd'}
+
